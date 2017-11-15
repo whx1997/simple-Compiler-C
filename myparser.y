@@ -113,6 +113,67 @@ const :   INT
         | BOOL
         | STRING
         ;
+
+block: '{' stmt_list '}'
+        ;
+
+function: attributed_type ID '(' arguments ')' block
+        |  attributed_type ID '(' ')' block 
+        |  attributed_type ID '(' arguments ')' ';'
+        |  attributed_type ID '::' ID '(' arguments ')' block
+        |  attributed_type ID '::' ID '(' ')' block
+        |  attributed_type ID '::' ID '(' arguments ')' ';'
+        ;
+
+arguments: arguments argument
+        | argument
+        ;
+
+argument: attributed_type ID
+        | attributed_type
+        ;
+
+attributed_type: type_name
+            | attribute_list type_name
+            ;
+
+attribute_list: attribute
+              | attribute_list attribute
+              ;
+
+attribute: STATIC
+          ;
+
+//struct
+struct: STRUCT ID '{' declare_stmt_list '}' ID_list ';'
+      | STRUCT ID '{' declare_stmt_list '}' ';'
+      | STRUCT '{' declare_stmt_list '}' ID_list ';'
+      ;
+
+declare_stmt_list: declare_stmt
+                |  declare_stmt_list declare_stmt
+                ;
+ID_list: ID
+      | ID_list ID
+      ;
+
+class: CLASS ID '{' member_specification '}' ID_list ';'
+    |  CLASS ID '{' member_specification '}' ';'
+    |  CLASS '{' member_specification '}' ID_list ';'
+    ;
+
+member_specification: member_specification member_declaration
+                    | member_declaration
+                    | access ':' member_specification
+                    ;
+
+member_declaration: declare_stmt
+                  | function
+                  ;
+
+access: PUBLIC 
+      | PRIVATE
+      ;
 %%
 
 /////////////////////////////////////////////////////////////////////////////
