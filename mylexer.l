@@ -52,6 +52,7 @@ public                  { return PUBLIC;}
 private                 { return PRIVATE;} 
 class                   { return CLASS;} 
 static                  { return STATIC;} 
+do                      { return DO;} 
 
 id						{ return ID;}
 number					{ return NUMBER;}
